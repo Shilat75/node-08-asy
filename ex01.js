@@ -11,9 +11,31 @@
 //
 // Run: node ex01.js
 
+// Exercise 1: File Reader with Stats
+
 const fs = require("fs");
 const path = require("path");
 
 const filePath = path.join(__dirname, "sample.txt");
 
+fs.readFile(filePath, "utf8", (error, data) => {
+    if (error) {
+        console.log(error.message);
+        return;
+    }
+
+    console.log("File Content:\n" + data);
+
+    fs.stat(filePath, (error, stats) => {
+        if (error) {
+            console.log(error.message);
+            return;
+        }
+
+        console.log(`Size: ${stats.size} bytes`);
+        console.log(`Created At: ${stats.birthtime.toISOString()}`);
+    });
+
+}); 
 // write your code here
+
