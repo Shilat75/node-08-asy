@@ -10,9 +10,33 @@
 //
 // Run: node ex02.js
 
+
 const fs = require("fs");
 const path = require("path");
 
 const directoryPath = path.join(__dirname, "my-folder");
+
+fs.readdir(directoryPath, (error, items) => {
+    if (error) {
+        console.log(error.message);
+        return;
+    }
+
+    items.forEach((item) => {
+        const fullPath = path.join(directoryPath, item);
+
+        fs.lstat(fullPath, (error, stats) => {
+            if (error) {
+                console.log(error.message);
+                return;
+            }
+
+            if (stats.isFile()) {
+                console.log(`File: ${item}`);
+            }
+        });
+    });
+});
+
 
 // write your code here
